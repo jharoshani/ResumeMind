@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — ResumeMind{% endblock %}
+
+{% block body %}
+<div class="app-layout">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                <rect width="48" height="48" rx="12" fill="url(#nav-grad)"/>
+                <path d="M14 14h20v4H14zm0 8h14v4H14zm0 8h18v4H14z" fill="white" opacity="0.9"/>
+                <circle cx="36" cy="34" r="6" fill="white" opacity="0.8"/>
+                <defs><linearGradient id="nav-grad" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+            </svg>
+            <span>ResumeMind</span>
+        </div>
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-link active">Dashboard</a>
+            <a href="/history" class="nav-link">History</a>
+        </div>
+        <div class="nav-user">
+            <img src="{{ user_pic }}" alt="Avatar" class="avatar" referrerpolicy="no-referrer">
+            <span class="user-name">{{ user_name }}</span>
+            <a href="/logout" class="logout-btn" id="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Resume Analyzer</h1>
+            <p>Enter a job description and upload resumes to find the best candidates</p>
+        </div>
+
+        <!-- Analysis Form -->
+        <form id="analysis-form" class="analysis-form">
+            <!-- Job Description Section -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2>📝 Job Description</h2>
+                    <span class="word-counter" id="word-counter">0 / 200 words</span>
+                </div>
+                <textarea
+                    id="job-description"
+                    name="job_description"
+                    placeholder="Paste the job description here... (max 200 words)"
+                    rows="6"
+                    required
+                ></textarea>
+                <div class="word-limit-bar">
+                    <div class="word-limit-fill" id="word-limit-fill"></div>
+                </div>
+            </div>
+
+            <!-- File Upload Section -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2>📄 Upload Resumes</h2>
+                    <span class="file-counter" id="file-counter">0 / 10 files</span>
+                </div>
+                <div class="upload-zone" id="upload-zone">
+                    <div class="upload-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drag & drop PDF files here</p>
+                    <p class="upload-subtext">or click to browse (max 10 files, PDF only)</p>
+                    <input type="file" id="file-input" name="resumes" multiple accept=".pdf" hidden>
+                </div>
+                <div class="file-list" id="file-list"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submit-btn" disabled>
+                <span class="btn-text">🔍 Analyze Resumes</span>
+                <span class="btn-loading" hidden>
+                    <span class="spinner"></span> Analyzing...
+                </span>
+            </button>
+        </form>
+
+        <!-- Error Display -->
+        <div class="error-container" id="error-container" hidden>
+            <div class="error-message" id="error-message"></div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results-section" hidden>
+            <div class="results-header">
+                <h2>📊 Analysis Results</h2>
+                <span class="results-count" id="results-count"></span>
+            </div>
+            <div class="results-grid" id="results-grid"></div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}History — ResumeMind{% endblock %}
+
+{% block body %}
+<div class="app-layout">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                <rect width="48" height="48" rx="12" fill="url(#nav-grad2)"/>
+                <path d="M14 14h20v4H14zm0 8h14v4H14zm0 8h18v4H14z" fill="white" opacity="0.9"/>
+                <circle cx="36" cy="34" r="6" fill="white" opacity="0.8"/>
+                <defs><linearGradient id="nav-grad2" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+            </svg>
+            <span>ResumeMind</span>
+        </div>
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/history" class="nav-link active">History</a>
+        </div>
+        <div class="nav-user">
+            <img src="{{ user_pic }}" alt="Avatar" class="avatar" referrerpolicy="no-referrer">
+            <span class="user-name">{{ user_name }}</span>
+            <a href="/logout" class="logout-btn" id="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>Analysis History</h1>
+            <p>View and manage your past resume analyses</p>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-state" id="loading-state">
+            <span class="spinner large"></span>
+            <p>Loading your history...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" hidden>
+            <div class="empty-icon">📋</div>
+            <h3>No analyses yet</h3>
+            <p>Go to the <a href="/dashboard">Dashboard</a> to run your first resume analysis.</p>
+        </div>
+
+        <!-- History List -->
+        <div class="history-list" id="history-list" hidden></div>
+
+        <!-- Detail Modal -->
+        <div class="modal-overlay" id="detail-modal" hidden>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h2>Analysis Details</h2>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}
