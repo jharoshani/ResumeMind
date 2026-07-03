@@ -1,0 +1,9 @@
+flask
+authlib
+pdfplumber
+scikit-learn
+pymongo
+python-dotenv
+requests
+numpy
+gunicorn
