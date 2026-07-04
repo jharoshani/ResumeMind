@@ -52,29 +52,35 @@ def analyze():
         return jsonify({"status": "error", "error": error_code, "message": msg}), 400
 
     # --- Step 3: Extract text from each PDF ---
-    cleaned_jd = clean_text(job_description)
     results = []
 
     for file in files:
         try:
             raw_text = extract_text_from_pdf(file.stream)
-            if not raw_text:
+            if not raw_text or not raw_text.strip():
                 # Skip files that couldn't be parsed
                 results.append({
                     "candidate_filename": file.filename,
                     "match_percentage": 0.0,
+                    "breakdown": {"core": 0.0, "experience": 0.0, "quality": 0.0, "format": 0.0},
                     "matched_skills": [],
+                    "missing_skills": [],
+                    "coaching_tips": ["This PDF file appears to be empty or contains non-readable scanned image text."],
+                    "warnings": ["Could not extract text from PDF."]
                 })
                 continue
 
             # --- Step 4: Run AI matching ---
-            cleaned_resume = clean_text(raw_text)
-            match_result = calculate_match(cleaned_jd, cleaned_resume)
+            match_result = calculate_match(job_description, raw_text)
 
             results.append({
                 "candidate_filename": file.filename,
                 "match_percentage": match_result["match_percentage"],
+                "breakdown": match_result["breakdown"],
                 "matched_skills": match_result["matched_skills"],
+                "missing_skills": match_result["missing_skills"],
+                "coaching_tips": match_result["coaching_tips"],
+                "warnings": match_result["warnings"]
             })
 
         except Exception as e:
@@ -82,7 +88,11 @@ def analyze():
             results.append({
                 "candidate_filename": file.filename,
                 "match_percentage": 0.0,
+                "breakdown": {"core": 0.0, "experience": 0.0, "quality": 0.0, "format": 0.0},
                 "matched_skills": [],
+                "missing_skills": [],
+                "coaching_tips": ["An internal parsing error occurred while processing this resume."],
+                "warnings": [f"Processing error: {str(e)}"]
             })
 
     # --- Step 5: Sort by match percentage (highest first) and assign rank ---
