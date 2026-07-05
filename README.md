@@ -9,7 +9,7 @@ Upload up to 10 PDF resumes, enter a Job Description, and get ranked candidates 
 ## Features
 
 - **Google OAuth Login** — Secure authentication via Authlib
-- **Job Description Input** — Text area with 200-word limit validation
+- **Job Description Input** — Text area with 500-word limit validation
 - **Bulk Resume Upload** — Upload up to 10 PDF resumes at once
 - **AI Matching Engine** — TF-IDF vectorization + cosine similarity scoring (1%–100%)
 - **Skill Extraction** — Highlights matching skills between JD and each resume

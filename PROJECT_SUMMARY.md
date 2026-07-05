@@ -1,7 +1,7 @@
 # ResumeMind — Project Summary
 
 ## What We're Building
-An AI-powered resume analyzer where recruiters log in via Google, enter a Job Description (≤200 words), upload up to 10 PDF resumes, and receive ranked match scores (1%–100%) with highlighted matching skills per candidate.
+An AI-powered resume analyzer where recruiters log in via Google, enter a Job Description (≤500 words), upload up to 10 PDF resumes, and receive ranked match scores (1%–100%) with highlighted matching skills per candidate.
 
 ## Finalized Tech Stack
 | Component | Tool |
@@ -18,7 +18,7 @@ An AI-powered resume analyzer where recruiters log in via Google, enter a Job De
 
 ## Core Constraints
 1. Google OAuth required — unauthenticated users see only the login page
-2. Job Description limited to 200 words (validated frontend + backend)
+2. Job Description limited to 500 words (validated frontend + backend)
 3. Maximum 10 PDF files per upload (backend enforced)
 4. Each resume gets a % score AND a list of matched skills
 5. All results saved to MongoDB for history

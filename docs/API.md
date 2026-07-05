@@ -219,7 +219,7 @@ These routes serve **HTML pages** via Flask's Jinja2 template engine. They do **
 
 **Page Content:**
 - Navigation bar with user avatar, name, and logout button
-- Job Description textarea with live word counter (max 200 words)
+- Job Description textarea with live word counter (max 500 words)
 - PDF file upload zone (drag-and-drop, max 10 files)
 - "Analyze" submit button
 - Results section (initially hidden, populated by JS after analysis)
@@ -276,7 +276,7 @@ All are prefixed under `/api`.
 
 | Field | Type | Required | Constraints |
 |---|---|---|---|
-| `job_description` | string | ✅ Yes | Must not be empty. Max 200 words. |
+| `job_description` | string | ✅ Yes | Must not be empty. Max 500 words. |
 | `resumes` | file[] | ✅ Yes | Min 1 file. Max 10 files. All must be `.pdf`. |
 
 **Frontend JavaScript Example:**
@@ -332,7 +332,7 @@ const data = await response.json();
 | HTTP Code | `error` Value | `message` | Cause |
 |---|---|---|---|
 | `400` | `"empty_job_description"` | `"Job description cannot be empty."` | JD field is blank or whitespace |
-| `400` | `"job_description_too_long"` | `"Job description exceeds 200 word limit (245 words)."` | JD has more than 200 words |
+| `400` | `"job_description_too_long"` | `"Job description exceeds 500 word limit (545 words)."` | JD has more than 500 words |
 | `400` | `"no_resumes_provided"` | `"Please upload at least one PDF resume."` | No files attached |
 | `400` | `"too_many_files"` | `"Maximum 10 resume files allowed. You uploaded 14."` | More than 10 files |
 | `400` | `"invalid_file_type"` | `"Invalid file: photo.png. Only PDF files are accepted."` | A non-PDF file found |
@@ -351,7 +351,7 @@ const data = await response.json();
 **Processing Pipeline:**
 ```
 1. Validate session → 401 if missing
-2. Validate JD → 400 if empty or > 200 words
+2. Validate JD → 400 if empty or > 500 words
 3. Validate files → 400 if count > 10 or non-PDF found
 4. For each PDF:
    a. Extract text via pdfplumber
@@ -602,7 +602,7 @@ All API error responses (from `/api/*` routes) follow this consistent structure:
 |---|---|---|---|
 | `unauthorized` | `401` | All `/api/*` routes | No active Flask session |
 | `empty_job_description` | `400` | `POST /api/analyze` | JD is blank/whitespace |
-| `job_description_too_long` | `400` | `POST /api/analyze` | JD exceeds 200 words |
+| `job_description_too_long` | `400` | `POST /api/analyze` | JD exceeds 500 words |
 | `no_resumes_provided` | `400` | `POST /api/analyze` | No PDF files uploaded |
 | `too_many_files` | `400` | `POST /api/analyze` | More than 10 files |
 | `invalid_file_type` | `400` | `POST /api/analyze` | Non-PDF file detected |

@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultsGrid = document.getElementById("results-grid");
     const resultsCount = document.getElementById("results-count");
 
-    const MAX_WORDS = 200;
+    const MAX_WORDS = 500;
     const MAX_FILES = 10;
     let selectedFiles = [];
 

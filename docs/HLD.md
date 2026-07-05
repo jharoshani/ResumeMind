@@ -5,7 +5,7 @@
 ## 1. System Overview
 
 **ResumeMind** is an AI-powered resume analysis web application built for recruiters.  
-A logged-in user pastes a **Job Description** (≤ 200 words), uploads up to **10 PDF resumes**, and the system returns a **1%–100% match score** along with a list of **matched skills** for each candidate — all ranked from highest to lowest.
+A logged-in user pastes a **Job Description** (≤ 500 words), uploads up to **10 PDF resumes**, and the system returns a **1%–100% match score** along with a list of **matched skills** for each candidate — all ranked from highest to lowest.
 
 ---
 
@@ -90,7 +90,7 @@ A logged-in user pastes a **Job Description** (≤ 200 words), uploads up to **1
 | **Auth Routes** | `routes/auth_routes.py` + Authlib | Google OAuth2 login, callback, token exchange, logout |
 | **Page Routes** | `routes/page_routes.py` | Serves HTML pages (login, dashboard, history) via Jinja2 |
 | **API Routes** | `routes/api_routes.py` | REST endpoints for analysis, history retrieval, profile |
-| **Validators** | `utils/validators.py` | Enforces 200-word limit, 10-file limit, PDF-only check |
+| **Validators** | `utils/validators.py` | Enforces 500-word limit, 10-file limit, PDF-only check |
 | **PDF Parser** | `utils/pdf_parser.py` + pdfplumber | Extracts raw text from uploaded PDF files |
 | **AI Engine** | `utils/ai_engine.py` + scikit-learn | TF-IDF vectorization → cosine similarity → % score + skills |
 | **DB Service** | `utils/db_service.py` + PyMongo | CRUD operations on MongoDB (users, analyses) |
@@ -155,7 +155,7 @@ Step  Actor            Action
 ```
 Step  Actor            Action
 ────  ───────────────  ──────────────────────────────────────────────
- 1    Browser          User types Job Description (≤200 words)
+ 1    Browser          User types Job Description (≤500 words)
  2    Browser (JS)     Frontend validates word count in real-time
  3    Browser          User selects up to 10 PDF files
  4    Browser (JS)     Frontend validates: file count ≤ 10, all .pdf
@@ -163,7 +163,7 @@ Step  Actor            Action
                         Body: { job_description: string, resumes: File[] }
  6    Flask            BACKEND VALIDATION:
                         • Check session['logged_in'] → 401 if missing
-                        • Check JD word count ≤ 200 → 400 if exceeded
+                        • Check JD word count ≤ 500 → 400 if exceeded
                         • Check file count ≤ 10 → 400 if exceeded
                         • Check all files end with .pdf → 400 if invalid
                         • Check JD is not empty → 400 if blank

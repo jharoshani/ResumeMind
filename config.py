@@ -23,5 +23,5 @@ class Config:
 
     # Application Constraints
     MAX_RESUMES = 10
-    MAX_JD_WORDS = 200
+    MAX_JD_WORDS = 500
     MAX_FILE_SIZE_MB = 5

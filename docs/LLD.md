@@ -63,7 +63,7 @@ Class: Config
 │   ├── GOOGLE_CLIENT_SECRET : str   ← From Google Cloud Console
 │   ├── GOOGLE_REDIRECT_URI  : str   ← Default: "http://localhost:5000/auth/callback"
 │   ├── MAX_RESUMES          : int   ← Default: 10
-│   ├── MAX_JD_WORDS         : int   ← Default: 200
+│   ├── MAX_JD_WORDS         : int   ← Default: 500
 │   └── MAX_FILE_SIZE_MB     : int   ← Default: 5
 ```
 
@@ -268,7 +268,7 @@ PROCESS:
   │  a. If job_description is empty or whitespace-only:            │
   │     → return 400, error: "empty_job_description"               │
   │                                                                │
-  │  b. If word count of job_description > 200:                    │
+  │  b. If word count of job_description > 500:                    │
   │     → return 400, error: "job_description_too_long"            │
   │                                                                │
   │  c. If no files uploaded:                                      │
@@ -467,7 +467,7 @@ EDGE CASES:
 
 ---
 
-#### Function: `validate_word_count(text: str, limit: int = 200) → tuple[bool, str]`
+#### Function: `validate_word_count(text: str, limit: int = 500) → tuple[bool, str]`
 
 ```
 ALGORITHM:

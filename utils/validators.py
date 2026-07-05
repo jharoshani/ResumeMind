@@ -1,10 +1,10 @@
-def validate_word_count(text, limit=200):
+def validate_word_count(text, limit=500):
     """
     Validate that text does not exceed the word limit.
 
     Args:
         text: The input string to validate.
-        limit: Maximum number of words allowed (default 200).
+        limit: Maximum number of words allowed (default 500).
 
     Returns:
         tuple: (is_valid: bool, message: str)
